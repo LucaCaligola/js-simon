@@ -4,27 +4,34 @@
 const giorniEl = document.querySelector('#giorni');
 const oreEl = document.querySelector('#ore');
 const minutiEl = document.querySelector('#minuti');
-const secondiEl = document.querySelector('#ore');
+const secondiEl = document.querySelector('#secondi');
 
 // Mi memorizzo la data che voglio raggiungere
 let capodanno = new Date (2024,0,1,0,0,0,0);
 
-// trovo la data di adesso
-let adesso = new Date();
 
-// trovo la differenza con adesso
-const dateDifference = capodanno.getTime() - adesso.getTime()
 
-console.log(dateDifference)
+const timer = setInterval (function() {
+    // trovo la data di adesso
+    let adesso = new Date();
 
-const secondi = Math.floor(dateDifference % (60  * 1000)) / 1000;
-const minuti = Math.floor(dateDifference % (60 * 60 * 1000)) / (1000 * 60);
-const ore = Math.floor(dateDifference % (24 * 60 * 60 * 1000)) / (1000 * 60 * 60);
-const giorni = Math.floor(dateDifference / (24 * 60 * 60 * 1000));
+    // trovo la differenza con adesso
+    const dateDifference = capodanno.getTime() - adesso.getTime()
 
-console.log(secondi)
-console.log(minuti)
-console.log(ore)
-console.log(giorni)
+    
 
-// scrivo e aggiorno in pagina il countdown
+    secondiEl.innerHTML = Math.floor((dateDifference % (60  * 1000)) / 1000);
+    minutiEl.innerHTML = Math.floor((dateDifference % (60 * 60 * 1000)) / (1000 * 60));
+    oreEl.innerHTML = Math.floor((dateDifference % (24 * 60 * 60 * 1000)) / (1000 * 60 * 60));
+    giorniEl.innerHTML = Math.floor((dateDifference / (24 * 60 * 60 * 1000)));
+
+  
+
+    // scrivo e aggiorno in pagina il countdown
+    if (dateDifference <= 0) {
+        clearInterval(timer);
+    }
+
+
+
+}, 1000)
